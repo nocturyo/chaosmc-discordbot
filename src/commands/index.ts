@@ -1,6 +1,5 @@
 import ping from './ping';
-import about from './about';
+import setlogchannel from './setlogchannel';
 import type { Command } from '../types/Command';
 
-
-export const commands: Command[] = [ping, about];
+export const commands: Command[] = [ping,setlogchannel];

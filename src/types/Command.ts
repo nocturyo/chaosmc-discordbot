@@ -1,7 +1,12 @@
-import { SlashCommandBuilder, ChatInputCommandInteraction } from 'discord.js';
+import {
+  SlashCommandBuilder,
+  SlashCommandSubcommandsOnlyBuilder,
+  SlashCommandOptionsOnlyBuilder,
+  ChatInputCommandInteraction,
+} from 'discord.js';
 
-
-export interface Command {
-data: SlashCommandBuilder;
-execute: (interaction: ChatInputCommandInteraction) => Promise<void>;
-}
+export type Command = {
+  // Akceptujemy wszystkie typostany buildera używane przez discord.js v14
+  data: SlashCommandBuilder | SlashCommandSubcommandsOnlyBuilder | SlashCommandOptionsOnlyBuilder;
+  execute: (interaction: ChatInputCommandInteraction) => Promise<void>;
+};

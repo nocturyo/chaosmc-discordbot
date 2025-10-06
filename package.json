@@ -19,7 +19,7 @@
     "typescript",
     "chaosmc"
   ],
-  "author": "TwójNick + ChatGPT",
+  "author": "Dairou",
   "license": "MIT",
   "engines": {
     "node": ">=20.0.0"
