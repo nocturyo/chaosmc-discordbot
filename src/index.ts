@@ -16,7 +16,7 @@ client.once(Events.ClientReady, async (c) => {
 
   // Ustawiamy prosty status "Ogląda CHAOSMC.ZONE"
   client.user?.setPresence({
-    activities: [{ name: 'CHAOSMC.ZONE', type: ActivityType.Watching }],
+    activities: [{ name: 'CHAOSMC.ZONE', type: ActivityType.Playing }],
     status: 'online',
   });
 
