@@ -41,3 +41,20 @@ export function setBoostChannelId(channelId: string): void {
   data.boostChannelId = channelId;
   writeFile(data);
 }
+
+export function getMcBanChannelId(): string | null {
+  try {
+    const data = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+    return data.mcBanChannelId ?? null;
+  } catch {
+    return null;
+  }
+}
+
+export function setMcBanChannelId(channelId: string): void {
+  let data: any = {};
+  try { data = JSON.parse(fs.readFileSync(configPath, 'utf8')); } catch {}
+  data.mcBanChannelId = channelId;
+  fs.mkdirSync(path.dirname(configPath), { recursive: true });
+  fs.writeFileSync(configPath, JSON.stringify(data, null, 2), 'utf8');
+}

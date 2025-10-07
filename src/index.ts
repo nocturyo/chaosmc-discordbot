@@ -9,7 +9,8 @@ import {
 import type { Command } from './types/Command';
 import { commands as commandList } from './commands';
 import { getConfig } from './config';
-import { setupBoostListener } from './events/boostListener'; // ⬅️ nasz listener boostów
+import { setupBoostListener } from './events/boostListener'; 
+
 
 const config = getConfig();
 
@@ -20,6 +21,9 @@ const client = new Client({
 
 const commands = new Collection<string, Command>();
 for (const cmd of commandList) commands.set(cmd.data.name, cmd);
+
+const port = parseInt(process.env.MC_WEBHOOK_PORT || '3040', 10);
+
 
 // Rejestrujemy listener boostów (przed loginem)
 setupBoostListener(client);

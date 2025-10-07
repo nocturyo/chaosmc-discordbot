@@ -1,15 +1,27 @@
-import ping from './ping';
-import setlogchannel from './setlogchannel';
-import warn from './warn';
 import type { Command } from '../types/Command';
-import cleanwarn from './cleanwarn';
+
 import ban from './ban';
-import unban from './unban';
-import timeout from './timeout';
-import userinfo from './userinfo';
+import cleanwarn from './cleanwarn';
 import mcstatus from './mcstatus';
+import ping from './ping';
 import setboostchannel from './setboostchannel';
+import setlogchannel from './setlogchannel';
+import timeout from './timeout';
+import unban from './unban';
+import userinfo from './userinfo';
+import warn from './warn';
 
-export const commands: Command[] = [ping, setlogchannel, warn, cleanwarn, ban, unban, timeout, userinfo, mcstatus, setboostchannel,
-
+export const commands: Command[] = [
+  ping,
+  mcstatus,
+  setlogchannel,
+  setboostchannel,
+  warn,
+  cleanwarn,
+  timeout,
+  ban,
+  unban,
+  userinfo,
 ];
+
+export default commands;
