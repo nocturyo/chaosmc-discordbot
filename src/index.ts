@@ -1,22 +1,35 @@
 import 'dotenv/config';
-import { Client, GatewayIntentBits, Events, Collection, ActivityType } from 'discord.js';
+import {
+  Client,
+  GatewayIntentBits,
+  Events,
+  Collection,
+  ActivityType,
+} from 'discord.js';
 import type { Command } from './types/Command';
 import { commands as commandList } from './commands';
 import { getConfig } from './config';
+import { setupBoostListener } from './events/boostListener'; // ⬅️ nasz listener boostów
 
 const config = getConfig();
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+// ❗ Dodajemy GuildMembers, żeby wykrywać boosty (GuildMemberUpdate)
+const client = new Client({
+  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers],
+});
 
 const commands = new Collection<string, Command>();
 for (const cmd of commandList) commands.set(cmd.data.name, cmd);
 
+// Rejestrujemy listener boostów (przed loginem)
+setupBoostListener(client);
+
 client.once(Events.ClientReady, async (c) => {
   console.log(`✅ Zalogowano jako ${c.user.tag}`);
 
-  // Ustawiamy prosty status "Ogląda CHAOSMC.ZONE"
+  // Status: "Ogląda CHAOSMC.ZONE" (Watching)
   client.user?.setPresence({
-    activities: [{ name: 'CHAOSMC.ZONE', type: ActivityType.Playing }],
+    activities: [{ name: 'CHAOSMC.ZONE', type: ActivityType.Watching }],
     status: 'online',
   });
 
@@ -28,14 +41,14 @@ client.on(Events.InteractionCreate, async (interaction) => {
 
   const command = commands.get(interaction.commandName);
   if (!command) {
-    return interaction.reply({ content: 'Nieznana komenda.', ephemeral: true });
+    await interaction.reply({ content: 'Nieznana komenda.', ephemeral: true });
+    return;
   }
 
   try {
     await command.execute(interaction);
   } catch (err) {
     console.error('❌ Błąd podczas wykonania komendy:', err);
-
     if (interaction.deferred || interaction.replied) {
       await interaction.editReply('Wystąpił błąd podczas wykonania komendy.');
     } else {
