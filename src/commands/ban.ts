@@ -8,9 +8,10 @@ import {
 } from 'discord.js';
 import type { Command } from '../types/Command';
 import { sendLogEmbed } from '../utils/logSender';
+import { incStat } from '../utils/modStats';
 
-// Kolor z .env (np. EMBED_COLOR=#98039b)
-const EMBED_COLOR = 0xff0000;
+// Kolor embedu dla banów — czerwony (liczba, nie string z '#')
+const EMBED_COLOR = 0xdc2626; // #DC2626
 
 const command: Command = {
   data: new SlashCommandBuilder()
@@ -34,7 +35,6 @@ const command: Command = {
     .setDMPermission(false),
 
   async execute(interaction: ChatInputCommandInteraction): Promise<void> {
-    // ✅ 1) Literówka naprawiona i bez zwracania Message
     if (!interaction.guild) {
       await interaction.reply({ content: 'Ta komenda działa tylko na serwerze.', ephemeral: true });
       return;
@@ -45,8 +45,8 @@ const command: Command = {
     const targetUser = interaction.options.getUser('użytkownik', true);
     const reason = interaction.options.getString('powód') ?? 'Brak powodu';
     const deleteDays = interaction.options.getInteger('usuń_wiadomości_dni') ?? 0;
+    const deleteMessageSeconds = Math.max(0, Math.min(7, deleteDays)) * 24 * 60 * 60;
 
-    // Pobierz członka gildii (jeśli jest)
     let targetMember: GuildMember | null = null;
     try {
       targetMember = await interaction.guild.members.fetch(targetUser.id);
@@ -54,15 +54,14 @@ const command: Command = {
       targetMember = null;
     }
 
-    const me = await interaction.guild.members.fetchMe();
-
-    // 2) Uprawnienia bota
+    // uprawnienia bota
     if (!interaction.guild.members.me?.permissions.has(PermissionFlagsBits.BanMembers)) {
       await interaction.editReply('❌ Nie mam uprawnienia **Ban Members** na tym serwerze.');
       return;
     }
 
-    // 3) Walidacje podstawowe
+    const me = await interaction.guild.members.fetchMe();
+
     if (targetUser.id === interaction.user.id) {
       await interaction.editReply('❌ Nie możesz zbanować samego siebie.');
       return;
@@ -72,7 +71,6 @@ const command: Command = {
       return;
     }
 
-    // 4) Hierarchia ról / bannowalność jeśli jest w gildii
     if (targetMember) {
       if (!targetMember.bannable) {
         await interaction.editReply('❌ Nie mogę zbanować tego użytkownika (brak uprawnień lub zbyt wysoka ranga).');
@@ -88,13 +86,13 @@ const command: Command = {
       }
     }
 
-    // 5) Przyjazna nazwa moderatora do DM
+    // przyjazna nazwa moderatora (nick lub tag)
     const moderatorDisplay =
       (interaction.member && 'nickname' in interaction.member && (interaction.member as any).nickname)
         ? (interaction.member as any).nickname
         : interaction.user.displayName ?? interaction.user.tag;
 
-    // 6) DM do banowanego
+    // DM do banowanego
     const dmEmbed = new EmbedBuilder()
       .setColor(EMBED_COLOR)
       .setTitle('🚫 Zostałeś zbanowany')
@@ -114,10 +112,10 @@ const command: Command = {
       dmOk = false;
     }
 
-    // 7) Ban
+    // wykonaj ban
     try {
       await interaction.guild.members.ban(targetUser.id, {
-        deleteMessageDays: deleteDays,
+        deleteMessageSeconds,
         reason: `${reason} | Moderator: ${interaction.user.tag} (${interaction.user.id})`,
       });
     } catch (err) {
@@ -125,7 +123,12 @@ const command: Command = {
       return;
     }
 
-    // 8) Potwierdzenie dla moderatora (ephemeral)
+    // inkrementuj statystyki (lokalne)
+    try {
+      incStat(interaction.guild.id, targetUser.id, 'bans');
+    } catch {}
+
+    // potwierdzenie dla moderatora
     const replyEmbed = new EmbedBuilder()
       .setColor(EMBED_COLOR)
       .setTitle('✅ Użytkownik zbanowany')
@@ -140,7 +143,7 @@ const command: Command = {
 
     await interaction.editReply({ embeds: [replyEmbed] });
 
-    // 9) Log do kanału logów
+    // log
     const logEmbed = new EmbedBuilder()
       .setColor(EMBED_COLOR)
       .setTitle('🚫 BAN')

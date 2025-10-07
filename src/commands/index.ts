@@ -5,7 +5,9 @@ import type { Command } from '../types/Command';
 import cleanwarn from './cleanwarn';
 import ban from './ban';
 import unban from './unban';
+import timeout from './timeout';
+import userinfo from './userinfo';
 
-export const commands: Command[] = [ping, setlogchannel, warn, cleanwarn, ban, unban
+export const commands: Command[] = [ping, setlogchannel, warn, cleanwarn, ban, unban, timeout, userinfo
 
 ];
