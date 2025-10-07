@@ -43,3 +43,25 @@ export function addWarn(guildId: string, userId: string, entry: WarnEntry): numb
 
   return db[guildId][userId].length;
 }
+
+export function removeWarns(
+  guildId: string,
+  userId: string,
+  count: number
+): { removed: number; remaining: number; removedEntries: WarnEntry[] } {
+  ensureFile();
+  const raw = fs.readFileSync(warnsPath, 'utf8');
+  const db: WarnDB = raw ? JSON.parse(raw) : {};
+
+  if (!db[guildId] || !db[guildId][userId] || db[guildId][userId].length === 0) {
+    return { removed: 0, remaining: 0, removedEntries: [] };
+  }
+
+  const list = db[guildId][userId];
+  const toRemove = Math.max(0, Math.min(count, list.length));
+  const removedEntries = list.splice(-toRemove, toRemove); // usuwa od końca (najnowsze)
+  db[guildId][userId] = list;
+
+  fs.writeFileSync(warnsPath, JSON.stringify(db, null, 2), 'utf8');
+  return { removed: toRemove, remaining: list.length, removedEntries };
+}
