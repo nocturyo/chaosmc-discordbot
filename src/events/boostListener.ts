@@ -5,13 +5,13 @@ import {
   userMention,
 } from 'discord.js';
 import { sendLogEmbed } from '../utils/logSender';
+import { getBoostChannelId } from '../utils/configManager';
 
-const BOOST_COLOR = 0x98039b; // fioletowy
+const BOOST_COLOR = 0x98039b; // fiolet
 
 export function setupBoostListener(client: Client) {
   client.on(Events.GuildMemberUpdate, async (oldMember, newMember) => {
     try {
-      // premiumSinceTimestamp: null -> liczba => nowy boost
       const before =
         (oldMember as any).premiumSinceTimestamp ??
         (oldMember as any).premiumSince?.getTime() ??
@@ -39,10 +39,20 @@ export function setupBoostListener(client: Client) {
           .setFooter({ text: 'Twoje wsparcie pozwala nam rozwijać ChaosMC. Dziękujemy!' })
           .setTimestamp();
 
-        // wyślij na kanał logów (ustawiony przez /setlogchannel)
-        const sent = await sendLogEmbed(client, guild.id, embed);
+        // 1) spróbuj wysłać na kanał boostów
+        const boostChannelId = getBoostChannelId();
+        if (boostChannelId) {
+          const chan = guild.channels.cache.get(boostChannelId) ??
+                       await guild.channels.fetch(boostChannelId).catch(() => null);
+          if (chan && 'send' in chan) {
+            await (chan as any).send({ embeds: [embed] });
+            return;
+          }
+        }
 
-        // awaryjnie spróbuj na systemChannel/publicUpdatesChannel jeśli brak log kanału
+        // 2) fallback: kanał logów
+        const sent = await sendLogEmbed(client, guild.id, embed);
+        // 3) ostateczny fallback: systemChannel/publicUpdates
         if (!sent) {
           const fallback = guild.systemChannel ?? guild.publicUpdatesChannel;
           await fallback?.send({ embeds: [embed] });

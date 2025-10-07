@@ -8,7 +8,8 @@ import unban from './unban';
 import timeout from './timeout';
 import userinfo from './userinfo';
 import mcstatus from './mcstatus';
+import setboostchannel from './setboostchannel';
 
-export const commands: Command[] = [ping, setlogchannel, warn, cleanwarn, ban, unban, timeout, userinfo, mcstatus
+export const commands: Command[] = [ping, setlogchannel, warn, cleanwarn, ban, unban, timeout, userinfo, mcstatus, setboostchannel,
 
 ];

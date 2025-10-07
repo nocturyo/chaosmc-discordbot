@@ -3,16 +3,41 @@ import path from 'path';
 
 const configPath = path.join(__dirname, '../data/config.json');
 
-export function getLogChannelId(): string | null {
+type FileShape = {
+  logChannelId?: string | null;
+  boostChannelId?: string | null;
+};
+
+function readFile(): FileShape {
   try {
-    const data = JSON.parse(fs.readFileSync(configPath, 'utf8'));
-    return data.logChannelId || null;
+    return JSON.parse(fs.readFileSync(configPath, 'utf8'));
   } catch {
-    return null;
+    return {};
   }
 }
 
-export function setLogChannelId(channelId: string): void {
-  const data = { logChannelId: channelId };
+function writeFile(data: FileShape) {
+  fs.mkdirSync(path.dirname(configPath), { recursive: true });
   fs.writeFileSync(configPath, JSON.stringify(data, null, 2), 'utf8');
+}
+
+export function getLogChannelId(): string | null {
+  const data = readFile();
+  return data.logChannelId ?? null;
+}
+export function setLogChannelId(channelId: string): void {
+  const data = readFile();
+  data.logChannelId = channelId;
+  writeFile(data);
+}
+
+// ⬇️ NOWE: kanał boostów
+export function getBoostChannelId(): string | null {
+  const data = readFile();
+  return data.boostChannelId ?? null;
+}
+export function setBoostChannelId(channelId: string): void {
+  const data = readFile();
+  data.boostChannelId = channelId;
+  writeFile(data);
 }
