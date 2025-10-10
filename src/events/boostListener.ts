@@ -32,7 +32,7 @@ export function setupBoostListener(client: Client) {
             `${userMention(newMember.id)} właśnie podbił(a) serwer. 💜`
           )
           .addFields(
-            { name: 'Booster', value: `${newMember.user.tag} (${newMember.id})`, inline: true },
+            { name: 'Booster', value: `${newMember.user.tag}`, inline: true },
             { name: 'Data', value: `<t:${Math.floor(after / 1000)}:F>`, inline: true },
           )
           .setThumbnail(newMember.displayAvatarURL())
