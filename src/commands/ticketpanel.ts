@@ -37,9 +37,6 @@ const command: Command = {
           'Aby skontaktować się z administracją, wybierz **typ zgłoszenia** z listy poniżej.',
           'Następnie opisz problem zgodnie z instrukcją w otwartym kanale.',
           '',
-          '⏱️ **Czas odpowiedzi** może wynieść do godziny w godzinach roboczych.',
-          '',
-          '⚠️ **Wysyłanie bezsensownych ticketów** może skutkować sankcjami.',
         ].join('\n')
       )
       .setFooter({ text: 'CHAOSMC.ZONE • System ticketów' });

@@ -279,7 +279,7 @@ export function setupTicketListener(client: Client) {
     }
 
     await inter.reply({
-      content: '🔒 Trwa zamykanie ticketa… generuję transkrypt (tylko dla administracji).',
+      content: '🔒 Trwa zamykanie ticketa…',
       ephemeral: true,
     });
 
