@@ -35,7 +35,7 @@ const command: Command = {
       return;
     }
 
-    await interaction.deferReply({ ephemeral: false });
+    await interaction.deferReply({ ephemeral: true });
 
     const target = interaction.options.getUser('użytkownik', true);
 

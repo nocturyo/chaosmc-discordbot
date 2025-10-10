@@ -1,5 +1,10 @@
 {
   "logChannelId": "1424400869641814169",
-  "boostChannelId": "1424185405170909254"
-
+  "boostChannelId": "1424185405170909254",
+  "welcomeChannelId": "1421316025449713684",
+  "verifyChannelId": "1425796420979527752",
+  "verifyRoleId": "1425557145335632082",
+  "ticketCategoryId": "1424187525521608805",
+  "ticketSupportRoleId": "1424394536217608252",
+  "ticketCounter": 4
 }

@@ -10,6 +10,9 @@ import type { Command } from './types/Command';
 import { commands as commandList } from './commands';
 import { getConfig } from './config';
 import { setupBoostListener } from './events/boostListener'; 
+import { setupWelcomeListener } from './events/welcomeListener';
+import { setupVerifyListener } from './events/verifyListener';
+import { setupTicketListener } from './events/ticketListener';
 
 
 const config = getConfig();
@@ -18,6 +21,10 @@ const config = getConfig();
 const client = new Client({
   intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers],
 });
+
+setupWelcomeListener(client);
+setupVerifyListener(client);
+setupTicketListener(client);
 
 const commands = new Collection<string, Command>();
 for (const cmd of commandList) commands.set(cmd.data.name, cmd);

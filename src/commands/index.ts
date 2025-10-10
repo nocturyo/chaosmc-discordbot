@@ -10,6 +10,11 @@ import timeout from './timeout';
 import unban from './unban';
 import userinfo from './userinfo';
 import warn from './warn';
+import say from './say';
+import setwelcomechannel from './setwelcomechannel';
+import setverify from './setverify';
+import ticketpanel from './ticketpanel';
+import ticketsetup from './ticketsetup';
 
 export const commands: Command[] = [
   ping,
@@ -22,6 +27,11 @@ export const commands: Command[] = [
   ban,
   unban,
   userinfo,
+  say,
+  setwelcomechannel,
+  setverify,
+  ticketsetup,
+  ticketpanel,
 ];
 
 export default commands;
