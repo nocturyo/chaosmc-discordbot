@@ -11,7 +11,9 @@
     "register": "node dist/scripts/register-commands.js",
     "register:dev": "ts-node-dev --respawn --transpile-only scripts/register-commands.ts dev",
     "register:global": "ts-node-dev --respawn --transpile-only scripts/register-commands.ts global",
-    "test": "echo \"Brak testów (dev-only)\" && exit 0"
+    "test": "echo \"Brak testów (dev-only)\" && exit 0",
+    "clear:dev": "ts-node-dev --respawn --transpile-only scripts/clear-guild-commands.ts"
+
   },
   "keywords": [
     "discord",
