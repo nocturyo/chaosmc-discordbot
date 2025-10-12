@@ -9,8 +9,7 @@ import type { Command } from '../types/Command';
 // kolor CHAOSMC.ZONE
 const EMBED_COLOR = 0x8b5cf6; // fioletowy
 
-// ID właściciela bota (zmień na swoje!)
-const OWNER_ID = 'TWOJE_DISCORD_ID';
+const OWNER_ID = '1218694113164263495';
 
 const command: Command = {
   data: new SlashCommandBuilder()
