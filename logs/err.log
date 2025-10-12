@@ -1,0 +1,6 @@
+(node:1608) Warning: Supplying "fetchReply" for interaction response options is deprecated. Utilize "withResponse" instead or fetch the response after using the method.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:9520) Warning: Supplying "fetchReply" for interaction response options is deprecated. Utilize "withResponse" instead or fetch the response after using the method.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:7776) Warning: Supplying "ephemeral" for interaction response options is deprecated. Utilize flags instead.
+(Use `node --trace-warnings ...` to show where the warning was created)
