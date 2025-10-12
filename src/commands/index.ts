@@ -15,6 +15,7 @@ import setwelcomechannel from './setwelcomechannel';
 import setverify from './setverify';
 import ticketpanel from './ticketpanel';
 import ticketsetup from './ticketsetup';
+import clear from './clear';
 
 export const commands: Command[] = [
   ping,
@@ -32,6 +33,7 @@ export const commands: Command[] = [
   setverify,
   ticketsetup,
   ticketpanel,
+  clear,
 ];
 
 export default commands;
