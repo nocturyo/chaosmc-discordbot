@@ -9,10 +9,11 @@ import {
 import type { Command } from './types/Command';
 import { commands as commandList } from './commands';
 import { getConfig } from './config';
-import { setupBoostListener } from './events/boostListener'; 
+import { setupBoostListener } from './events/boostListener';
 import { setupWelcomeListener } from './events/welcomeListener';
 import { setupVerifyListener } from './events/verifyListener';
 import { setupTicketListener } from './events/ticketListener';
+import { connectDatabase } from "./utils/database"; // ✅ import połączenia z bazą
 
 
 const config = getConfig();
@@ -22,6 +23,11 @@ const client = new Client({
   intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers],
 });
 
+// ✅ Połącz z bazą danych przed uruchomieniem klienta Discord
+(async () => {
+  await connectDatabase();
+})();
+
 setupWelcomeListener(client);
 setupVerifyListener(client);
 setupTicketListener(client);
@@ -30,7 +36,6 @@ const commands = new Collection<string, Command>();
 for (const cmd of commandList) commands.set(cmd.data.name, cmd);
 
 const port = parseInt(process.env.MC_WEBHOOK_PORT || '3040', 10);
-
 
 // Rejestrujemy listener boostów (przed loginem)
 setupBoostListener(client);

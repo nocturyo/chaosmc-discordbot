@@ -9,6 +9,7 @@ import {
 import type { Command } from '../types/Command';
 import { sendLogEmbed } from '../utils/logSender';
 import { incStat } from '../utils/modStats';
+import { prisma } from '../utils/database'; // ✅ DB
 
 // Kolor embedu dla banów — czerwony (liczba, nie string z '#')
 const EMBED_COLOR = 0xdc2626; // #DC2626
@@ -121,6 +122,22 @@ const command: Command = {
     } catch (err) {
       await interaction.editReply(`❌ Nie udało się zbanować użytkownika: ${String(err)}`);
       return;
+    }
+
+    // ✅ Zapis do bazy (BanLog) po udanym banie
+    try {
+await prisma.banLog.create({
+  data: {
+    guildId: interaction.guild.id,
+    userId: targetUser.id,
+    moderator: interaction.user.id,
+    reason: deleteDays > 0 ? `${reason} (usunięto wiadomości: ${deleteDays}d)` : reason,
+  },
+});
+
+    } catch (err) {
+      // Nie blokujemy dalszej logiki; tylko log w konsoli
+      console.error('❌ Błąd zapisu bana do bazy:', err);
     }
 
     // inkrementuj statystyki (lokalne)

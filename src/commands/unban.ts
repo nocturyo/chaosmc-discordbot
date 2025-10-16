@@ -7,8 +7,8 @@ import {
 } from 'discord.js';
 import type { Command } from '../types/Command';
 import { sendLogEmbed } from '../utils/logSender';
+import { prisma } from '../utils/database'; // ✅ DB
 
-// Kolor embedu z .env (np. EMBED_COLOR=#98039b)
 const EMBED_COLOR = 0x22c55e;
 
 const command: Command = {
@@ -35,29 +35,28 @@ const command: Command = {
 
     await interaction.deferReply({ ephemeral: true });
 
-    const userId = interaction.options.getString('id', true);
+    const userId = interaction.options.getString('id', true).trim();
     const reason = interaction.options.getString('powód') ?? 'Brak powodu';
 
-    // Sprawdź, czy bot ma permisję
+    // Sprawdź uprawnienia bota
     if (!interaction.guild.members.me?.permissions.has(PermissionFlagsBits.BanMembers)) {
       await interaction.editReply('❌ Nie mam uprawnienia **Ban Members** na tym serwerze.');
       return;
     }
 
-    // Spróbuj pobrać informacje o banie
+    // Sprawdź czy jest zbanowany
     let banInfo;
     try {
       banInfo = await interaction.guild.bans.fetch(userId);
     } catch {
       banInfo = null;
     }
-
     if (!banInfo) {
       await interaction.editReply(`⚠️ Użytkownik o ID \`${userId}\` nie jest obecnie zbanowany.`);
       return;
     }
 
-    // Wykonaj unban
+    // Unban
     try {
       await interaction.guild.bans.remove(userId, `${reason} | Moderator: ${interaction.user.tag}`);
     } catch (err) {
@@ -65,7 +64,22 @@ const command: Command = {
       return;
     }
 
-    // Potwierdzenie dla moderatora (ephemeral)
+    // ✅ Zapisz do bazy (UnbanLog)
+    try {
+      await prisma.unbanLog.create({
+        data: {
+          guildId: interaction.guild.id,
+          userId,
+          moderator: interaction.user.id,
+          reason,
+        },
+      });
+    } catch (err) {
+      console.error('❌ Błąd zapisu unbana do bazy:', err);
+      // Nie blokujemy odpowiedzi/loga – tylko zapis do konsoli.
+    }
+
+    // Potwierdzenie dla moderatora
     const replyEmbed = new EmbedBuilder()
       .setColor(EMBED_COLOR)
       .setTitle('✅ Użytkownik odbanowany')
@@ -86,7 +100,7 @@ const command: Command = {
           `**Powód:** ${reason}`
       )
       .addFields(
-        { name: 'ID Użytkownika', value: userId, inline: true },
+        { name: 'ID Użytkownika', value: String(userId), inline: true },
         { name: 'ID Moderatora', value: interaction.user.id, inline: true },
         { name: 'Data', value: `<t:${Math.floor(Date.now() / 1000)}:F>`, inline: false },
       )

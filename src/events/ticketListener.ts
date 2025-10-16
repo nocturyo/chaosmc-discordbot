@@ -24,6 +24,7 @@ import {
 
 import { sendLogEmbed } from '../utils/logSender';
 import { makeTranscript } from '../utils/transcript';
+import { prisma } from '../utils/database'; // ✅ DB
 
 /* =======================
  *   Kategorie ticketów
@@ -166,8 +167,24 @@ export function setupTicketListener(client: Client) {
       return;
     }
 
-    const parentId = getTicketCategoryId();
-    const supportRoleId = getTicketSupportRoleId();
+    // 🔎 Najpierw spróbuj z DB
+    let parentId: string | null = null;
+    let supportRoleId: string | null = null;
+    try {
+      const cfg = await prisma.guildConfig.findUnique({
+        where: { guildId: inter.guild.id },
+        select: { ticketCategoryId: true, ticketSupportRoleId: true },
+      });
+      parentId = cfg?.ticketCategoryId ?? null;
+      supportRoleId = cfg?.ticketSupportRoleId ?? null;
+    } catch (e) {
+      console.error('[ticketListener] DB read error:', e);
+    }
+
+    // 🔁 Fallback na Twój configManager (jeśli brak w DB)
+    if (!parentId) parentId = getTicketCategoryId() ?? null;
+    if (!supportRoleId) supportRoleId = getTicketSupportRoleId() ?? null;
+
     if (!parentId || !supportRoleId) {
       await inter.reply({
         content: '⚠️ System ticketów nie jest skonfigurowany. Użyj **/ticketsetup**.',
@@ -218,6 +235,20 @@ export function setupTicketListener(client: Client) {
         },
       ],
     });
+
+    // ✅ Zapisz do bazy rekord ticketa
+    try {
+      await prisma.ticket.create({
+        data: {
+          guildId: inter.guild.id,
+          userId: inter.user.id,
+          channelId: ch.id,
+          // status: 'open' (domyślnie z modelu)
+        },
+      });
+    } catch (e) {
+      console.error('❌ Błąd zapisu ticketa do bazy:', e);
+    }
 
     const intro = new EmbedBuilder()
       .setColor(0x8b5cf6)
@@ -292,7 +323,22 @@ export function setupTicketListener(client: Client) {
       console.error('Transcript error:', e);
     }
 
-    // 2) Wyślij do kanału logów (administracja)
+    // 2) Zaktualizuj w bazie (status -> closed)
+    try {
+      const t = await prisma.ticket.findFirst({
+        where: { guildId: inter.guild.id, channelId: ch.id, status: 'open' },
+      });
+      if (t) {
+        await prisma.ticket.update({
+          where: { id: t.id },
+          data: { status: 'closed', closedAt: new Date() },
+        });
+      }
+    } catch (e) {
+      console.error('❌ Błąd aktualizacji ticketa w bazie:', e);
+    }
+
+    // 3) Wyślij do kanału logów (administracja)
     try {
       const log = new EmbedBuilder()
         .setColor(0xef4444)
@@ -317,8 +363,6 @@ export function setupTicketListener(client: Client) {
     } catch (e) {
       console.error('Log send error:', e);
     }
-
-    // 3) NIE wysyłamy DM do autora – transkrypt jest tylko dla administracji
 
     // 4) Usuń kanał po chwili
     setTimeout(async () => {

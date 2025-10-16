@@ -1,22 +1,39 @@
+// src/events/welcomeListener.ts
 import {
   AttachmentBuilder,
   Client,
   Events,
-  TextChannel,
+  type GuildTextBasedChannel,
 } from 'discord.js';
 import { createCanvas, loadImage, CanvasRenderingContext2D, Image } from 'canvas';
-import { getWelcomeChannelId } from '../utils/configManager';
+import { prisma } from '../utils/database';                 // ✅ DB (GuildConfig.welcomeChannelId)
+import { getWelcomeChannelId } from '../utils/configManager'; // fallback lokalny
 
 export function setupWelcomeListener(client: Client) {
   client.on(Events.GuildMemberAdd, async (member) => {
     try {
-      const channelId = getWelcomeChannelId();
+      // 1) Spróbuj pobrać kanał powitań z bazy
+      let channelId: string | null = null;
+      try {
+        const cfg = await prisma.guildConfig.findUnique({
+          where: { guildId: member.guild.id },
+          select: { welcomeChannelId: true },
+        });
+        channelId = cfg?.welcomeChannelId ?? null;
+      } catch (e) {
+        console.error('[welcomeListener] DB read error:', e);
+      }
+
+      // 2) Fallback: lokalny config (jeśli używasz)
+      if (!channelId) {
+        const local = getWelcomeChannelId();
+        if (local) channelId = local;
+      }
       if (!channelId) return;
 
-      const ch =
-        member.guild.channels.cache.get(channelId) ??
-        (await member.guild.channels.fetch(channelId).catch(() => null));
-      if (!ch || !('send' in ch)) return;
+      // Pobierz kanał i upewnij się, że jest tekstowy w gildii
+      const ch = await member.guild.channels.fetch(channelId).catch(() => null);
+      if (!ch || !ch.isTextBased()) return;
 
       const buffer = await renderWelcomeCard({
         username: member.user.username,
@@ -32,7 +49,7 @@ export function setupWelcomeListener(client: Client) {
       });
 
       const file = new AttachmentBuilder(buffer, { name: 'welcome.png' });
-      await (ch as TextChannel).send({ files: [file] });
+      await (ch as GuildTextBasedChannel).send({ files: [file] });
     } catch (e) {
       console.error('[welcomeListener] error:', e);
     }
@@ -117,9 +134,9 @@ async function renderWelcomeCard(opts: CardOpts): Promise<Buffer> {
   ctx.fillText(footer, 100, height - 50);
 
   // liczba członków
+  ctx.font = 'bold 16px sans-serif';
   const badgeText = `${opts.memberCount.toLocaleString('pl-PL')} osób`;
   const padX = 18;
-  ctx.font = 'bold 16px sans-serif';
   const tw = ctx.measureText(badgeText).width;
   const bx = width - 80 - (tw + padX * 2);
   const by = 64;

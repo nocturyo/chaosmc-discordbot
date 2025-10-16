@@ -1,0 +1,73 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model GuildConfig {
+  id               Int      @id @default(autoincrement())
+  guildId          String   @unique
+  logChannelId     String?
+  welcomeChannelId String?
+  verifyRoleId     String?
+  verifyChannelId  String?
+  ticketCategoryId String?
+  ticketSupportRoleId String?
+  boostChannelId   String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+
+model Warning {
+  id        Int      @id @default(autoincrement())
+  guildId   String
+  userId    String
+  moderator String
+  reason    String
+  createdAt DateTime @default(now())
+}
+
+model BanLog {
+  id        Int      @id @default(autoincrement())
+  guildId   String
+  userId    String
+  moderator String
+  reason    String
+  createdAt DateTime @default(now())
+}
+
+model TimeoutLog {
+  id        Int      @id @default(autoincrement())
+  guildId   String
+  userId    String
+  moderator String
+  duration  String   // np. "10 min", "2 h", "1 d"
+  reason    String
+  createdAt DateTime @default(now())
+}
+
+model UnbanLog {
+  id        Int      @id @default(autoincrement())
+  guildId   String
+  userId    String
+  moderator String
+  reason    String
+  createdAt DateTime @default(now())
+}
+
+model Ticket {
+  id        Int      @id @default(autoincrement())
+  guildId   String
+  userId    String
+  channelId String
+  status    String   @default("open")
+  createdAt DateTime @default(now())
+  closedAt  DateTime?
+
+  @@index([guildId, userId])
+  @@index([guildId, channelId])
+}

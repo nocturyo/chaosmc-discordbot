@@ -8,8 +8,7 @@ import {
   time,
 } from 'discord.js';
 import type { Command } from '../types/Command';
-import { getWarns } from '../utils/warnManager';
-import { getUserStats } from '../utils/modStats';
+import { prisma } from '../utils/database'; // ✅ DB
 
 // Kolor embedu (weź z .env lub domyślny „Discord blurple”)
 const EMBED_COLOR =
@@ -47,21 +46,50 @@ const command: Command = {
       member = null;
     }
 
-    // Warny z lokalnej bazy
-    const warns = getWarns(interaction.guild.id, target.id);
-    const warnsCount = warns.length;
-    const lastWarns =
-      warnsCount > 0
-        ? warns
-            .slice(-3)
-            .map(
-              (w) =>
-                `• ${new Date(w.timestamp).toLocaleString()} — ${w.reason}`
-            )
-            .join('\n')
-        : 'Brak';
+    // ✅ Dane moderacyjne z bazy
+    let warnsCount = 0;
+    let lastWarnsText = 'Brak';
+    let bansCount = 0;
+    let timeoutsCount = 0;
 
-    // Timeout – czy aktywny i ile zostało
+    try {
+      const [warnsTotal, lastWarns, bansTotal, timeoutsTotal] = await Promise.all([
+        prisma.warning.count({
+          where: { guildId: interaction.guild.id, userId: target.id },
+        }),
+        prisma.warning.findMany({
+          where: { guildId: interaction.guild.id, userId: target.id },
+          orderBy: { createdAt: 'desc' },
+          take: 3,
+          select: { createdAt: true, reason: true },
+        }),
+        prisma.banLog.count({
+          where: { guildId: interaction.guild.id, userId: target.id },
+        }),
+        prisma.timeoutLog.count({
+          where: { guildId: interaction.guild.id, userId: target.id },
+        }),
+      ]);
+
+      warnsCount = warnsTotal;
+
+      if (lastWarns.length > 0) {
+        lastWarnsText = lastWarns
+          .map((w) => {
+            const unix = Math.floor(w.createdAt.getTime() / 1000);
+            return `• ${time(unix, 'F')} — ${w.reason}`;
+          })
+          .join('\n');
+      }
+
+      bansCount = bansTotal;
+      timeoutsCount = timeoutsTotal;
+    } catch (err) {
+      console.error('❌ Błąd pobierania danych z bazy w /userinfo:', err);
+      // Nie przerywamy — pokażemy to, co mamy (np. role/timeout live).
+    }
+
+    // Timeout – czy aktywny i ile zostało (live z Discorda)
     let timeoutField = 'Brak';
     if (member?.communicationDisabledUntilTimestamp) {
       const until = member.communicationDisabledUntilTimestamp;
@@ -81,9 +109,6 @@ const command: Command = {
         .slice(0, 10)
         .join(', ') || 'Brak / poza serwerem';
 
-    // Lokalna historia (opcjonalna) – licznik banów/timeouts jeśli zaczniemy je zliczać
-    const stats = getUserStats(interaction.guild.id, target.id);
-
     const embed = new EmbedBuilder()
       .setColor(EMBED_COLOR)
       .setAuthor({ name: `${target.tag}`, iconURL: target.displayAvatarURL() })
@@ -98,18 +123,18 @@ const command: Command = {
         },
         {
           name: 'Serwer',
-          value: member
-            ? `Dołączył: ${time(Math.floor(member.joinedTimestamp! / 1000), 'F')}`
+          value: member?.joinedTimestamp
+            ? `Dołączył: ${time(Math.floor(member.joinedTimestamp / 1000), 'F')}`
             : 'Poza serwerem',
           inline: true,
         },
         { name: 'Role', value: roles, inline: false },
         { name: 'Warny (łącznie)', value: String(warnsCount), inline: true },
-        { name: 'Ostatnie warny', value: lastWarns, inline: false },
-        { name: 'Timeout', value: timeoutField, inline: true },
+        { name: 'Ostatnie warny', value: lastWarnsText, inline: false },
+        { name: 'Timeout (aktywny)', value: timeoutField, inline: true },
         {
-          name: 'Historia (lokalna)',
-          value: `Bany: **${stats.bans}** • Timeouty: **${stats.timeouts}** • Warny: **${stats.warns}**`,
+          name: 'Historia (z bazy)',
+          value: `Bany: **${bansCount}** • Timeouty: **${timeoutsCount}** • Warny: **${warnsCount}**`,
           inline: false,
         }
       )

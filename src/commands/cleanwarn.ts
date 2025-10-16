@@ -6,8 +6,8 @@ import {
   userMention,
 } from 'discord.js';
 import type { Command } from '../types/Command';
-import { getWarns, removeWarns } from '../utils/warnManager';
 import { sendLogEmbed } from '../utils/logSender';
+import { prisma } from '../utils/database'; // ✅ DB
 
 // Kolor embedu z .env (np. EMBED_COLOR=#98039b). Obsługa bez/za '#'.
 const EMBED_COLOR =
@@ -20,7 +20,7 @@ const EMBED_COLOR =
 const command: Command = {
   data: new SlashCommandBuilder()
     .setName('cleanwarn')
-    .setDescription('Usuń określoną liczbę ostrzeżeń użytkownika (np. 1 z 3).')
+    .setDescription('Usuń określoną liczbę ostatnich ostrzeżeń użytkownika.')
     .addUserOption((opt) =>
       opt.setName('użytkownik').setDescription('Kogo edytujesz?').setRequired(true)
     )
@@ -36,14 +36,30 @@ const command: Command = {
 
   async execute(interaction: ChatInputCommandInteraction) {
     if (!interaction.guild) {
-      await interaction.reply({ content: 'Ta komenda działa tylko na serwerze.', ephemeral: true });
+      await interaction.reply({
+        content: 'Ta komenda działa tylko na serwerze.',
+        ephemeral: true,
+      });
       return;
     }
 
     const user = interaction.options.getUser('użytkownik', true);
     const amount = interaction.options.getInteger('ilość', true);
 
-    const before = getWarns(interaction.guild.id, user.id).length;
+    // policz aktualne ostrzeżenia w DB
+    let before = 0;
+    try {
+      before = await prisma.warning.count({
+        where: { guildId: interaction.guild.id, userId: user.id },
+      });
+    } catch (err) {
+      console.error('❌ Błąd podczas zliczania ostrzeżeń:', err);
+      await interaction.reply({
+        content: '❌ Wystąpił błąd bazy podczas sprawdzania ostrzeżeń.',
+        ephemeral: true,
+      });
+      return;
+    }
 
     if (before === 0) {
       await interaction.reply({
@@ -53,11 +69,36 @@ const command: Command = {
       return;
     }
 
-    const { removed, remaining, removedEntries } = removeWarns(
-      interaction.guild.id,
-      user.id,
-      amount
-    );
+    // pobierz N ostatnich warnów (po dacie malejąco) i usuń je
+    let removedEntries:
+      { id: number; reason: string; createdAt: Date }[] = [];
+    let removed = 0;
+    let remaining = before;
+
+    try {
+      removedEntries = await prisma.warning.findMany({
+        where: { guildId: interaction.guild.id, userId: user.id },
+        orderBy: { createdAt: 'desc' },
+        take: amount,
+        select: { id: true, reason: true, createdAt: true },
+      });
+
+      if (removedEntries.length > 0) {
+        const ids = removedEntries.map((w) => w.id);
+        const del = await prisma.warning.deleteMany({
+          where: { id: { in: ids } },
+        });
+        removed = del.count;
+        remaining = Math.max(before - removed, 0);
+      }
+    } catch (err) {
+      console.error('❌ Błąd podczas usuwania ostrzeżeń:', err);
+      await interaction.reply({
+        content: '❌ Wystąpił błąd bazy podczas usuwania ostrzeżeń.',
+        ephemeral: true,
+      });
+      return;
+    }
 
     const reply = new EmbedBuilder()
       .setColor(EMBED_COLOR)
@@ -72,8 +113,10 @@ const command: Command = {
 
     if (removedEntries.length > 0) {
       const reasons = removedEntries
-        .slice(-3)
-        .map((w) => `• ${new Date(w.timestamp).toLocaleString()} — ${w.reason}`)
+        .slice(0, 3) // pokazujemy max 3 ostatnio usunięte
+        .map(
+          (w) => `• ${new Date(w.createdAt).toLocaleString()} — ${w.reason}`
+        )
         .join('\n');
       reply.addFields({ name: 'Usunięte (ostatnie)', value: reasons });
     }
@@ -84,7 +127,10 @@ const command: Command = {
     const log = new EmbedBuilder()
       .setColor(EMBED_COLOR)
       .setTitle('🧹 Czyszczenie ostrzeżeń')
-      .setDescription(`Moderator: ${userMention(interaction.user.id)}\nUżytkownik: ${userMention(user.id)}`)
+      .setDescription(
+        `Moderator: ${userMention(interaction.user.id)}\n` +
+        `Użytkownik: ${userMention(user.id)}`
+      )
       .addFields(
         { name: 'Usunięto', value: String(removed), inline: true },
         { name: 'Przed', value: String(before), inline: true },

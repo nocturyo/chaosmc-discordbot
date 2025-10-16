@@ -9,6 +9,7 @@ import {
 import type { Command } from '../types/Command';
 import { sendLogEmbed } from '../utils/logSender';
 import { incStat } from '../utils/modStats';
+import { prisma } from '../utils/database'; // ✅ DB
 
 // Fiolet (Twój kolor)
 const EMBED_COLOR = 0x98039b;
@@ -157,6 +158,22 @@ const command: Command = {
     } catch (err) {
       await interaction.editReply(`❌ Nie udało się nałożyć timeoutu: ${String(err)}`);
       return;
+    }
+
+    // ✅ Zapis do DB (TimeoutLog)
+    try {
+      await prisma.timeoutLog.create({
+        data: {
+          guildId: interaction.guild.id,
+          userId: targetUser.id,
+          moderator: interaction.user.id,
+          duration: parsed.label,
+          reason,
+        },
+      });
+    } catch (err) {
+      console.error('❌ Błąd zapisu timeoutu do bazy:', err);
+      // Nie przerywamy komendy – logujemy błąd i lecimy dalej.
     }
 
     // statystyka

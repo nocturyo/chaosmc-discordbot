@@ -11,6 +11,7 @@ import {
 } from 'discord.js';
 import type { Command } from '../types/Command';
 import { setVerifyRoleId, setVerifyChannelId } from '../utils/configManager';
+import { prisma } from '../utils/database'; // ✅ DB
 
 const command: Command = {
   data: new SlashCommandBuilder()
@@ -38,13 +39,30 @@ const command: Command = {
     const channel = interaction.options.getChannel('kanał', true);
     const role = interaction.options.getRole('rola', true);
 
-    setVerifyChannelId(channel.id);
-    setVerifyRoleId(role.id);
+    try {
+      // 🔹 lokalny config (jeśli używasz)
+      setVerifyChannelId(channel.id);
+      setVerifyRoleId(role.id);
 
-    await interaction.reply({
-      content: `✅ Zapisano ustawienia weryfikacji.\n• Kanał: ${channel}\n• Rola: <@&${role.id}>`,
-      ephemeral: true,
-    });
+      // 🔹 zapis w bazie
+      await prisma.guildConfig.upsert({
+        where: { guildId: interaction.guildId! },
+        update: { verifyChannelId: channel.id, verifyRoleId: role.id },
+        create: { guildId: interaction.guildId!, verifyChannelId: channel.id, verifyRoleId: role.id },
+      });
+
+      await interaction.reply({
+        content: `✅ Zapisano ustawienia weryfikacji.\n• Kanał: ${channel}\n• Rola: <@&${role.id}>`,
+        ephemeral: true,
+      });
+    } catch (e) {
+      console.error('❌ Błąd zapisu ustawień weryfikacji do bazy:', e);
+      await interaction.reply({
+        content: '❌ Nie udało się zapisać ustawień weryfikacji do bazy.',
+        ephemeral: true,
+      });
+      return;
+    }
 
     // wyślij panel weryfikacji
     const embed = new EmbedBuilder()
@@ -65,7 +83,8 @@ const command: Command = {
     try {
       await (channel as TextChannel).send({ embeds: [embed], components: [row] });
     } catch (e) {
-      console.error('Nie udało się wysłać panelu weryfikacji:', e);
+      console.error('❌ Nie udało się wysłać panelu weryfikacji:', e);
+      // Nie przerywamy — ustawienia są już zapisane.
     }
   },
 };

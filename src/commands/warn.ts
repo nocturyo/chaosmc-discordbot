@@ -6,9 +6,9 @@ import {
   userMention,
 } from 'discord.js';
 import type { Command } from '../types/Command';
-import { addWarn } from '../utils/warnManager';
 import { sendLogEmbed } from '../utils/logSender';
 import { incStat } from '../utils/modStats';
+import { prisma } from '../utils/database'; // ✅ Prisma
 
 const MAX_WARNS = 3;
 
@@ -41,21 +41,39 @@ const command: Command = {
     const target = interaction.options.getUser('użytkownik', true);
     const reason = interaction.options.getString('powód') ?? 'Brak powodu';
 
-    // zapis ostrzeżenia
-    const count = addWarn(interaction.guild.id, target.id, {
-      userId: target.id,
-      moderatorId: interaction.user.id,
-      reason,
-      timestamp: Date.now(),
-    });
-
-    const fraction = `${Math.min(count, MAX_WARNS)}/${MAX_WARNS}`;
-
     // przyjazna nazwa moderatora do DM
     const moderatorDisplay =
       (interaction.member && 'nickname' in interaction.member && (interaction.member as any).nickname)
         ? (interaction.member as any).nickname
         : interaction.user.displayName ?? interaction.user.tag;
+
+    // ✅ Zapis ostrzeżenia w bazie + policzenie łącznej liczby z DB
+    let totalWarns = 0;
+    try {
+      await prisma.$transaction(async (tx) => {
+        await tx.warning.create({
+          data: {
+            guildId: interaction.guild!.id,
+            userId: target.id,
+            moderator: interaction.user.id,
+            reason,
+          },
+        });
+
+        totalWarns = await tx.warning.count({
+          where: { guildId: interaction.guild!.id, userId: target.id },
+        });
+      });
+    } catch (err) {
+      console.error('❌ Błąd podczas zapisywania ostrzeżenia w bazie:', err);
+      await interaction.reply({
+        content: '❌ Wystąpił błąd podczas zapisywania ostrzeżenia do bazy.',
+        ephemeral: true,
+      });
+      return;
+    }
+
+    const fraction = `${Math.min(totalWarns, MAX_WARNS)}/${MAX_WARNS}`;
 
     // embed (ephemeral) dla moderatora
     const replyEmbed = new EmbedBuilder()
@@ -119,17 +137,17 @@ const command: Command = {
 
     await sendLogEmbed(interaction.client, interaction.guild.id, logEmbed);
 
-    // statystyka (lokalna)
+    // statystyka (lokalna; opcjonalnie zostawiamy Twój mechanizm)
     try {
       incStat(interaction.guild.id, target.id, 'warns');
     } catch {}
 
     // opcjonalna eskalacja przy 3/3
-    if (count >= MAX_WARNS) {
+    if (totalWarns >= MAX_WARNS) {
       const overEmbed = new EmbedBuilder()
         .setColor(0xdc2626)
         .setTitle('⛔ Limit ostrzeżeń osiągnięty')
-        .setDescription(`${userMention(target.id)} ma ${count}/${MAX_WARNS} ostrzeżeń.`)
+        .setDescription(`${userMention(target.id)} ma ${totalWarns}/${MAX_WARNS} ostrzeżeń.`)
         .setTimestamp();
       await sendLogEmbed(interaction.client, interaction.guild.id, overEmbed);
     }
