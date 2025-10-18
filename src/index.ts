@@ -14,6 +14,7 @@ import { setupWelcomeListener } from './events/welcomeListener';
 import { setupVerifyListener } from './events/verifyListener';
 import { setupTicketListener } from './events/ticketListener';
 import { connectDatabase } from "./utils/database"; // ✅ import połączenia z bazą
+import { startAdvancedBanWatcher } from './services/advancedbanWatcher';
 
 
 const config = getConfig();
@@ -27,6 +28,11 @@ const client = new Client({
 (async () => {
   await connectDatabase();
 })();
+
+client.once('ready', async () => {
+  console.log(`Zalogowano jako ${client.user?.tag}`);
+  await startAdvancedBanWatcher(client);
+});
 
 setupWelcomeListener(client);
 setupVerifyListener(client);

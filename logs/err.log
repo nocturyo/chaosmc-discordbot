@@ -1,52 +1,1233 @@
-(node:2180) Warning: Supplying "ephemeral" for interaction response options is deprecated. Utilize flags instead.
-(Use `node --trace-warnings ...` to show where the warning was created)
-node:events:497
-      throw er; // Unhandled 'error' event
-      ^
-
-DiscordAPIError[10062]: Unknown interaction
-    at handleErrors (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\@discordjs\rest\dist\index.js:762:13)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async BurstHandler.runRequest (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\@discordjs\rest\dist\index.js:866:23)
-    at async _REST.request (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\@discordjs\rest\dist\index.js:1307:22)
-    at async ChatInputCommandInteraction.reply (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\discord.js\src\structures\interfaces\InteractionResponses.js:200:22)
-    at async Client.<anonymous> (C:\Users\Administrator\Desktop\chaosmc-bot\dist\index.js:39:9)
-Emitted 'error' event on Client instance at:
-    at emitUnhandledRejectionOrErr (node:events:402:10)
-    at process.processTicksAndRejections (node:internal/process/task_queues:92:21) {
-  requestBody: {
-    files: [],
-    json: {
-      type: 4,
-      data: {
-        content: 'Nieznana komenda.',
-        tts: false,
-        nonce: undefined,
-        enforce_nonce: false,
-        embeds: undefined,
-        components: undefined,
-        username: undefined,
-        avatar_url: undefined,
-        allowed_mentions: undefined,
-        flags: 64,
-        message_reference: undefined,
-        attachments: undefined,
-        sticker_ids: undefined,
-        thread_name: undefined,
-        applied_tags: undefined,
-        poll: undefined
-      }
-    }
-  },
-  rawError: { message: 'Unknown interaction', code: 10062 },
-  code: 10062,
-  status: 404,
-  method: 'POST',
-  url: 'https://discord.com/api/v10/interactions/1427441618956455996/aW50ZXJhY3Rpb246MTQyNzQ0MTYxODk1NjQ1NTk5Njo0VWZWOTFlR3VTbWREckdpQzl6VVljYVh0Vk5xTnJOUkZtWEdrYnRYMEk1VzNRWGE4dEVhY0ZEc1lTWHFjeDJROEZ6TVJ6MnBHaEJiZGY5SzhTUTJJMnlVQ2R1enZxa1IyVHU2eVZsWEtYRDRWOXVDY1NhSmNiZnpOZm9jaDNrVA/callback?with_response=false'
+(node:700) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
 }
-
-Node.js v22.20.0
-(node:12280) Warning: Supplying "ephemeral" for interaction response options is deprecated. Utilize flags instead.
-(Use `node --trace-warnings ...` to show where the warning was created)
-(node:9572) Warning: Supplying "ephemeral" for interaction response options is deprecated. Utilize flags instead.
-(Use `node --trace-warnings ...` to show where the warning was created)
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+[AdvancedBan] Poll error: Error: Unknown column 'ip' in 'SELECT'
+    at PromisePool.query (C:\Users\Administrator\Desktop\chaosmc-bot\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at fetchNewPunishments (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:164:31)
+    at Timeout._onTimeout (C:\Users\Administrator\Desktop\chaosmc-bot\dist\services\advancedbanWatcher.js:55:35)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '    SELECT \n' +
+    '      `id` AS _id,\n' +
+    '      `name` AS _name,\n' +
+    '      `uuid` AS _uuid,\n' +
+    '      `ip` AS _ip,\n' +
+    '      `reason` AS _reason,\n' +
+    '      `operator` AS _operator,\n' +
+    '      `punishmentType` AS _type,\n' +
+    '      `start` AS _start,\n' +
+    '      `end` AS _end\n' +
+    '    FROM `punishments`\n' +
+    '    WHERE `id` > 8\n' +
+    '      \n' +
+    '    ORDER BY `id` ASC\n' +
+    '    LIMIT 200\n' +
+    '  ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'ip' in 'SELECT'"
+}
+(node:5972) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:12244) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:12276) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:13276) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:5020) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:3504) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:2380) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:7232) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:3148) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:8460) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:8424) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:8424) Warning: Supplying "ephemeral" for interaction response options is deprecated. Utilize flags instead.
+(node:6796) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:3004) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
